@@ -86,7 +86,12 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: 'city',
+  mounted: {
+    
+  }
+}
 </script>
 
 <style scoped>
