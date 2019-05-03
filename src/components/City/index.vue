@@ -88,8 +88,52 @@
 <script>
 export default {
   name: 'city',
-  mounted: {
-    
+  mounted() {
+    this.axios.get('/api/cityList').then((res) => {
+      let cities = res.data.data.cities
+      // [{index: 'A', list: [{nm: '阿城', id: 123}]}]
+      console.log(this.formatCityList(cities))
+    })
+  },
+  methods: {
+    formatCityList(cities) {
+      let cityList = []
+      let hotList = []
+
+      for(let i=0; i<cities.length; i++){
+        let firstLetter = cities[i].py.substring(0,1).toUpperCase()
+        if(toCom(firstLetter)){  // 新添加index
+          cityList.push({index: firstLetter, list: [{nm: cities[i].nm, id: cities[i].id}]})
+        }else{  // 累加到已有index
+          for(let j=0; j<cityList.length; j++){
+            if(cityList[j].index === firstLetter){
+              cityList[j].list.push({nm: cities[i].nm, id: cities[i].id})
+            }
+          }
+        }
+      }
+
+      cityList.sort((n1, n2) => {
+        if(n1.index > n2.index){
+          return 1
+        }else if(n1.index < n2.index){
+          return -1
+        }else{
+          return 0
+        }
+      })
+
+      function toCom(firstLetter) {
+        for(let i=0; i<cityList.length; i++){
+          if(cityList[i].index === firstLetter){
+            return false
+          }
+        }
+        return true
+      }
+
+      return cityList
+    }
   }
 }
 </script>
