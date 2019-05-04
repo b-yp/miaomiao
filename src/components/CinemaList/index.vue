@@ -1,5 +1,5 @@
 <template>
-  <div id="content">
+
     <div class="cinema_body">
       <ul>
         <li>
@@ -100,7 +100,7 @@
         </li>
       </ul>
     </div>
-  </div>
+
 </template>
 
 <script>

@@ -17,11 +17,12 @@
           <i class="iconfont icon-lower-triangle"></i>
         </div>
       </div>
-    </div>
 
-    <keep-alive>
-      <router-view></router-view>
-    </keep-alive>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+
+    </div>
 
     <TabBer/>
   </div>

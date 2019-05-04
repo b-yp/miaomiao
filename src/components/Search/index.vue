@@ -1,5 +1,5 @@
 <template>
-  <div id="content">
+
     <div class="search_body">
       <div class="search_input">
         <div class="search_input_wrapper">
@@ -41,7 +41,7 @@
         </ul>
       </div>
     </div>
-  </div>
+
 </template>
 
 <script>

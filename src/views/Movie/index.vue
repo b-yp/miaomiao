@@ -16,11 +16,12 @@
           <i class="iconfont icon-sousuo"></i>
         </router-link>
       </div>
-    </div>
 
-    <keep-alive>
-      <router-view></router-view>
-    </keep-alive>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+
+    </div>
 
     <TabBer/>
   </div>
@@ -39,14 +40,6 @@ export default {
 </script>
 
 <style scoped>
-#content {
-  flex: 1;
-  overflow: auto;
-  margin-bottom: 50px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
 #content .movie_menu {
   width: 100%;
   height: 45px;
@@ -107,5 +100,15 @@ export default {
 .movie_menu .search_entry i {
   font-size: 24px;
   color: red;
+}
+
+.slide-enter-active{ animation : 13s detailMove;}
+@keyframes detailMove{
+	0%{
+		transform : translateX(100%);
+	}
+	100%{
+		transform : translateX(0);
+	}
 }
 </style>
