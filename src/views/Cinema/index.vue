@@ -24,18 +24,18 @@
 
     </div>
 
-    <TabBer/>
+    <TabBar/>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header";
-import TabBer from "@/components/TabBer";
+import TabBar from "@/components/TabBar";
 export default {
   name: "Cinema",
   components: {
     Header,
-    TabBer
+    TabBar
   }
 };
 </script>

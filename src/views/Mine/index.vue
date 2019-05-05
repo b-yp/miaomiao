@@ -6,18 +6,18 @@
       <router-view></router-view>
     </keep-alive>
 
-    <TabBer/>
+    <TabBar/>
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header";
-import TabBer from "@/components/TabBer";
+import TabBar from "@/components/TabBar";
 export default {
   name: "Mine",
   components: {
     Header,
-    TabBer
+    TabBar
   }
 };
 </script>

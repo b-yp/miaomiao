@@ -123,7 +123,7 @@
 export default {};
 </script>
 
-<style>
+<style scoped>
 #content .movie_body {
   flex: 1;
   overflow: auto;
