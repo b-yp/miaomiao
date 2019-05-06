@@ -7,6 +7,10 @@ import axios from 'axios'
 
 Vue.prototype.axios = axios
 
+Vue.filter('setWH', (url, arg)=>{
+  return url.replace(/W\.H/, arg)
+})
+
 Vue.config.productionTip = false
 
 new Vue({
