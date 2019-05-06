@@ -4,7 +4,7 @@
       <div class="search_input">
         <div class="search_input_wrapper">
           <i class="iconfont icon-sousuo"></i>
-          <input type="text">
+          <input type="text" v-model="message">
         </div>
       </div>
       <div class="search_result">
@@ -45,7 +45,22 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: 'Search',
+  data() {
+    return {
+      message: "",
+      moviesList: []
+    }
+  },
+  watch: {
+    message(newVal){
+      this.axios.get('/api/searchList?cityId=10&kw='+newVal).then((res) => {
+        console.log(res)
+      })
+    }
+  }
+};
 </script>
 
 <style scoped>

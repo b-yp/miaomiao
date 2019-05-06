@@ -22,7 +22,7 @@
             <img :src="item.img | setWH('128.180')">
           </div>
           <div class="info_list">
-            <h2>{{ item.nm }}</h2>
+            <h2>{{ item.nm }} <img v-if="item.version" src="@/assets/maxs.png"> </h2>
             <p>
               <span class="person">{{ item.wish }}</span> 人想看
             </p>
