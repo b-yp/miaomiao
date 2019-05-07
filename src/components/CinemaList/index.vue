@@ -30,8 +30,7 @@
             <span>{{ item.distance }}</span>
           </div>
           <div class="card">
-            <div>小吃</div>
-            <div>折扣卡</div>
+            <div v-for="(itemCard, key) in item.tag" v-if="itemCard === 1" :key="key" :class="key | classCard">{{ key | formatCard }}</div>
           </div>
         </li>
       </ul>
@@ -49,14 +48,43 @@ export default {
   },
   mounted() {
     this.axios.get('/api/cinemaList?cityId=10').then((res) => {
-      console.log(res)
       let msg = res.data.msg
       if(msg === 'ok'){
         this.cinemaList = res.data.data.cinemas
       }
     })
+  },
+  filters: {
+    formatCard(key) {
+      let card = [
+        {key: 'allowRefund', value: '改签'},
+        {key: 'endorse', value: '退票'},
+        {key: 'sell', value: '折扣卡'},
+        {key: 'snack', value: '小吃'}
+      ]
+      for(let i=0; i<card.length; i++){
+        if(card[i].key === key){
+          return card[i].value
+        }
+      }
+      return ''
+    },
+    classCard(key) {
+      let card = [
+        {key: 'allowRefund', value: 'bl'},
+        {key: 'endorse', value: 'bl'},
+        {key: 'sell', value: 'or'},
+        {key: 'snake', value: 'or'}
+      ]
+      for(let i=0; i<card.length; i++){
+        if(card[i].key === key){
+          return card[i].value
+        }
+      }
+      return ''
+    }
   }
-};
+}
 </script>
 
 <style scoped>
