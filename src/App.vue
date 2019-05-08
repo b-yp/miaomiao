@@ -1,10 +1,8 @@
 <template>
-  <div>
-    <keep-alive>
-      <router-view></router-view>
-    </keep-alive>
-    <!-- <TabBer/> -->
-  </div>
+  <keep-alive>
+    <router-view></router-view>
+  </keep-alive>
+  <!-- <TabBer/> -->
 </template>
 
 <script>
