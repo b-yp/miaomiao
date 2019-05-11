@@ -1,6 +1,8 @@
 <template>
 
-    <div class="movie_body">
+  <div class="movie_body">
+    <loading v-if="isLoading" />
+    <Scroller v-else>
       <ul>
         <!-- <li>
           <div class="pic_show">
@@ -32,7 +34,8 @@
           <div class="btn_pre">预售</div>
         </li>
       </ul>
-    </div>
+    </Scroller>
+  </div>
 
 </template>
 
@@ -41,7 +44,8 @@ export default {
   name: 'Comingsoon',
   data() {
     return {
-      comingList: []
+      comingList: [],
+      isLoading: true
     }
   },
   mounted() {
@@ -49,6 +53,7 @@ export default {
       let msg = res.data.msg
       if(msg === "ok"){
         let comingList = res.data.data.comingList
+        this.isLoading = false
         this.comingList = comingList
       }
     })

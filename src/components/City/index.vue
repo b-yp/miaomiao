@@ -1,31 +1,34 @@
 <template>
   <div class="city_body">
     <div class="city_list">
-      <div class="city_hot">
-        <h2>热门城市</h2>
-        <ul class="clearfix">
-          <li v-for="item in hotList" :key="item.id">{{ item.nm }}</li>
-        </ul>
-      </div>
-      <div class="city_sort" ref="city_sort">
-        <!-- <div>
-          <h2>A</h2>
-          <ul>
-            <li>阿拉善盟</li>
-            <li>鞍山</li>
-            <li>安庆</li>
-            <li>安阳</li>
-          </ul>
-        </div> -->
-
-        <div v-for="item in cityList" :key="item.index">
-          <h2>{{ item.index }}</h2>
-          <ul>
-            <li v-for="itemCity in item.list" :key="itemCity.id">{{ itemCity.nm }}</li>
+      <loading v-if="isLoading" />
+      <Scroller v-else>
+        <div class="city_hot">
+          <h2>热门城市</h2>
+          <ul class="clearfix">
+            <li v-for="item in hotList" :key="item.id">{{ item.nm }}</li>
           </ul>
         </div>
+        <div class="city_sort" ref="city_sort">
+          <!-- <div>
+            <h2>A</h2>
+            <ul>
+              <li>阿拉善盟</li>
+              <li>鞍山</li>
+              <li>安庆</li>
+              <li>安阳</li>
+            </ul>
+          </div> -->
 
-      </div>
+          <div v-for="item in cityList" :key="item.index">
+            <h2>{{ item.index }}</h2>
+            <ul>
+              <li v-for="itemCity in item.list" :key="itemCity.id">{{ itemCity.nm }}</li>
+            </ul>
+          </div>
+
+        </div>
+      </Scroller>
     </div>
     <div class="city_index">
       <ul>
@@ -41,7 +44,8 @@ export default {
   data() {
     return {
       cityList: [],
-      hotList: []
+      hotList: [],
+      isLoading: true
     }
   },
   mounted() {
@@ -49,6 +53,7 @@ export default {
       let msg = res.data.msg
       if(msg === 'ok'){
         let cities = res.data.data.cities
+        this.isLoading = false
         // [{index: 'A', list: [{nm: '阿城', id: 123}]}]
         let {cityList, hotList} = this.formatCityList(cities)
         this.cityList = cityList

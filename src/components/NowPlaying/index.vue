@@ -1,40 +1,43 @@
 <template>
 
     <div class="movie_body" ref="movie_body">
-      <ul>
-        <!-- <li>
-          <div class="pic_show">
-            <img src="/images/movie_1.jpg">
-          </div>
-          <div class="info_list">
-            <h2>无名之辈</h2>
-            <p>
-              观众评
-              <span class="grade">9.2</span>
-            </p>
-            <p>主演: 陈建斌,任素汐,潘斌龙</p>
-            <p>今天55家影院放映607场</p>
-          </div>
-          <div class="btn_mall">购票</div>
-        </li> -->
-        <li class="pullDown">{{ pullDownMsg }}</li>
-        <li v-for="item in movieList" :key="item.id">
-          <div class="pic_show" @tap="handleToDetail">
-            <img :src="item.img | setWH('128.180')">
-          </div>
-          <div class="info_list">
-            <h2>{{ item.nm }} <img v-if="item.version" src="@/assets/maxs.png"> </h2>
-            <p>
-              观众评
-              <span class="grade">{{ item.sc }}</span>
-            </p>
-            <p>主演: {{ item.star }}</p>
-            <p>{{ item.showInfo }}</p>
-          </div>
-          <div class="btn_mall">购票</div>
-        </li>
-       
-      </ul>
+      <Loading v-if="isLoading"></Loading>
+      <Scroller v-else :handleToScroll="handleToScroll" :handleToTouchEnd="handleToTouchEnd">
+        <ul>
+          <!-- <li>
+            <div class="pic_show">
+              <img src="/images/movie_1.jpg">
+            </div>
+            <div class="info_list">
+              <h2>无名之辈</h2>
+              <p>
+                观众评
+                <span class="grade">9.2</span>
+              </p>
+              <p>主演: 陈建斌,任素汐,潘斌龙</p>
+              <p>今天55家影院放映607场</p>
+            </div>
+            <div class="btn_mall">购票</div>
+          </li> -->
+          <li class="pullDown">{{ pullDownMsg }}</li>
+          <li v-for="item in movieList" :key="item.id">
+            <div class="pic_show" @tap="handleToDetail">
+              <img :src="item.img | setWH('128.180')">
+            </div>
+            <div class="info_list">
+              <h2>{{ item.nm }} <img v-if="item.version" src="@/assets/maxs.png"> </h2>
+              <p>
+                观众评
+                <span class="grade">{{ item.sc }}</span>
+              </p>
+              <p>主演: {{ item.star }}</p>
+              <p>{{ item.showInfo }}</p>
+            </div>
+            <div class="btn_mall">购票</div>
+          </li>
+        
+        </ul>
+      </Scroller>
     </div>
 
 </template>
@@ -48,7 +51,8 @@ export default {
   data() {
     return {
       movieList: [],
-      pullDownMsg: ''
+      pullDownMsg: '',
+      isLoading: true
     }
   },
   mounted() {
@@ -56,35 +60,36 @@ export default {
       let msg = res.data.msg
       if(msg === "ok"){
         this.movieList = res.data.data.movieList
-        this.$nextTick(()=>{
-          let scroll = new BScroll(this.$refs.movie_body, {
-            tap: true,
-            probeType: 1
-          })
+        this.isLoading = false
+        // this.$nextTick(()=>{
+        //   let scroll = new BScroll(this.$refs.movie_body, {
+        //     tap: true,
+        //     probeType: 1
+        //   })
 
-          scroll.on('scroll', (pos)=>{
-            // console.log('scroll')
-            if(pos.y>30){
-              this.pullDownMsg = '正在刷新'
-            }
-          })
+        //   scroll.on('scroll', (pos)=>{
+        //     // console.log('scroll')
+        //     if(pos.y>30){
+        //       this.pullDownMsg = '正在刷新'
+        //     }
+        //   })
 
-          scroll.on('touchEnd', (pos)=>{
-            // console.log('touchend')
-            if(pos.y>30){
-              this.axios.get('/api/movieOnInfoList?cityId=10').then((res) => {
-                let msg = res.data.msg
-                if(msg === "ok"){
-                  this.pullDownMsg = '刷新完成'
-                  setTimeout(()=>{
-                    this.movieList = res.data.data.movieList
-                    this.pullDownMsg = ''
-                  },1000)
-                }
-              })
-            }
-          })
-        })
+        //   scroll.on('touchEnd', (pos)=>{
+        //     // console.log('touchend')
+        //     if(pos.y>30){
+        //       this.axios.get('/api/movieOnInfoList?cityId=10').then((res) => {
+        //         let msg = res.data.msg
+        //         if(msg === "ok"){
+        //           this.pullDownMsg = '刷新完成'
+        //           setTimeout(()=>{
+        //             this.movieList = res.data.data.movieList
+        //             this.pullDownMsg = ''
+        //           },1000)
+        //         }
+        //       })
+        //     }
+        //   })
+        // })
       }
     })
 
@@ -92,6 +97,27 @@ export default {
   methods: {
     handleToDetail() {
       console.log("handle")
+    },
+
+    handleToScroll(pos) {
+      if(pos.y>30){
+        this.pullDownMsg = '正在刷新'
+      }
+    },
+
+    handleToTouchEnd(pos){
+      if(pos.y>30){
+        this.axios.get('/api/movieOnInfoList?cityId=10').then((res)=>{
+          let msg = res.data.msg
+          if(msg === 'ok'){
+            this.pullDownMsg = '更新完成'
+            setTimeout(()=>{
+              this.movieList = res.data.data.movieList
+              this.pullDownMsg = ''
+            },1000)
+          }
+        })
+      }
     }
   }
 };
