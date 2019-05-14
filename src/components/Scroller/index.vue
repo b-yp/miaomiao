@@ -33,6 +33,11 @@ export default {
     scroll.on('touchEnd', (pos)=>{
       this.handleToTouchEnd(pos)
     })
+  },
+  methods: {
+    toScrollTop(y) {
+      this.scroll.scrollTo(0, y)
+    }
   }
 }
 </script>
