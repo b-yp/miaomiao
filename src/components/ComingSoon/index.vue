@@ -20,11 +20,11 @@
         </li> -->
 
         <li v-for="item in comingList" :key="item.id">
-          <div class="pic_show">
+          <div class="pic_show" @tap="handleToDetail(item.id)">
             <img :src="item.img | setWH('128.180')">
           </div>
           <div class="info_list">
-            <h2>{{ item.nm }} <img v-if="item.version" src="@/assets/maxs.png"> </h2>
+            <h2 @tap="handleToDetail(item.id)">{{ item.nm }} <img v-if="item.version" src="@/assets/maxs.png"> </h2>
             <p>
               <span class="person">{{ item.wish }}</span> 人想看
             </p>
@@ -47,6 +47,12 @@ export default {
       comingList : [],
       isLoading : true,
       prevCityId : -1
+    }
+  },
+  methods: {
+    handleToDetail(movieId) {
+      // console.log(movieId)
+      this.$router.push('/movie/detail/2/'+movieId)
     }
   },
   activated() {

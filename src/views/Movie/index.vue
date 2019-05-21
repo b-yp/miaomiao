@@ -22,9 +22,10 @@
 
     </div>
 
-
-
     <TabBar/>
+
+    <router-view name="detail"/>
+
   </div>
 </template>
 
@@ -44,7 +45,7 @@ export default {
       this.axios.get('/api/getLocation').then((res)=>{
         let msg = res.data.msg
         if( msg === 'ok'){
-          
+
           let nm = res.data.data.nm
           let id = res.data.data.id
 
